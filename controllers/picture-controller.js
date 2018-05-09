@@ -1,6 +1,37 @@
 const Picture = require ("../models/picture")
 
 module.exports={
+    getAllpictures:(req,res,next)=>{
+        Picture.find({})
+        .then(pic=>{
+            res.send(pic)
+        })
+        .catch(err=>{
+            res.send(err)
+        })
+    },
+
+    getPicturesById:(req,res,next)=>{
+        Picture.findById(req.params.id,(err,result)=>{
+            if(err) res.status(500).json(err)
+            else{
+                res.json(result)
+            }
+        })
+    },
+
+    getPicturesByCategory:(req,res,next)=>{
+        // console.log('masuk ga')
+        // Picture.find({category:req.params.category})
+        // .then(pic=>{
+        //     res.send(pic)
+        // })
+        // .catch(err=>{
+            
+        //     res.send(req.params)
+        // })
+    },
+
     upload:(req,res)=>{
         let newPicture = new Picture({
             user_id:req.body.userid,
