@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {upload,deletePic,editPic} = require ('../controllers/picture-controller')
 const images = require('../helpers/uploadpic')
 
 /* GET users listing. */
@@ -8,20 +9,11 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET main endpoint. */
-router.get('/', (req, res, next) => {
-  res.send({ message: 'Welcome Buddy!' })
-})
+router.post('/add',)
 
-
-router.post('/upload',
-  images.multer.single('image'), 
-  images.sendUploadToGCS,
-  (req, res) => {
-    res.send({
-      message: 'Your file is successfully uploaded',
-      link: req.file.cloudStoragePublicUrl
-    })
-  })
+router.post('/upload',images.multer.single('image'),images.sendUploadToGCS,upload)
+router.delete('/delete/:id',deletePic)
+router.put('/edit/:id',images.multer.single('image'),images.sendUploadToGCS,editPic)
 
 
 module.exports = router;
