@@ -1,8 +1,7 @@
-
 var express = require('express');
 var router = express.Router();
 const multer = require('multer');
-const { addImage } = require('../controllers/image_controller');
+const { addImage, getImage } = require('../controllers/image_controller');
 const { sendUploadToGCS } = require('../middlewares/uploadGcs');
 const upload = multer({
  storage  : multer.memoryStorage(),
@@ -16,9 +15,7 @@ const {
 } = require('../controllers/index-controller')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', getImage);
 
 router.post('/image', upload.single('item'), sendUploadToGCS, addImage)
 
