@@ -13,13 +13,14 @@ const upload = multer({
 const {
   register,
   login,
-  generateToken
+  generateToken,
+  auth
 } = require('../controllers/index-controller')
 
 /* GET home page. */
 router.get('/', getImage);
 
-router.post('/image', upload.single('item'), sendUploadToGCS, addImage)
+router.post('/image', auth, upload.single('item'), sendUploadToGCS, addImage)
 
 // POST
 router.post('/register', register)
