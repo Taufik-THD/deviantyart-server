@@ -79,7 +79,7 @@ module.exports = {
   generateToken(req, res, next) {
     let user = res.locals.user
     let token = jwt.sign({user}, jwtSecret)
-    res.status(200).json({token})
+    res.status(200).json({token, userId: user._id})
   },
 
   auth(req, res, next) {
@@ -93,7 +93,7 @@ module.exports = {
           message: 'please login first'
         })
       }
-      // console.log('------', result)
+      console.log('------', result)
     }
     next()
   }
