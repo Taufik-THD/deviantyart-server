@@ -7,6 +7,7 @@ const pictureSchema = new Schema({
   user_id:String,
   picture_name:String,
   description:String,
+  likes: 0,
   pic_url:String
 })
 

@@ -1,12 +1,10 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
-mongoose.connect('mongodb://localhost/testing_db')
-
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-  name: {
+  nama: {
     type: String,
     required: true
   },
