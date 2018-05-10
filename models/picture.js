@@ -5,8 +5,8 @@ const Schema = mongoose.Schema
 const pictureSchema = new Schema({
   // {type:Schema.Types.ObjectId, ref:'User'}
   user_id:String,
+  picture_name:String,
   description:String,
-  category : String,
   pic_url:String
 })
 

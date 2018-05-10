@@ -8,7 +8,6 @@ const cors = require('cors');
 
 var mongoose=require('mongoose')
 
-
 var indexRouter = require('./routes/index');
 // var picturesRouter = require('./routes/pictures');
 
