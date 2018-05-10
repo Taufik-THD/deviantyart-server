@@ -11,32 +11,34 @@ module.exports={
         })
     },
 
-    getPicturesById:(req,res,next)=>{
-        Picture.findById(req.params.id,(err,result)=>{
-            if(err) res.status(500).json(err)
-            else{
-                res.json(result)
-            }
-        })
+    getPicturesByUserId:(req,res,next)=>{
+       Picture.find({user_id:req.params.id})
+       .then(pic=>{
+           res.send(pic)
+       })
+       .catch(err=>{
+           res.send(err)
+       })
     },
 
     getPicturesByCategory:(req,res,next)=>{
-        // console.log('masuk ga')
-        // Picture.find({category:req.params.category})
-        // .then(pic=>{
-        //     res.send(pic)
-        // })
-        // .catch(err=>{
-            
-        //     res.send(req.params)
-        // })
+        console.log('masuk ga')
+        Picture.find({category:req.params.category})
+        .then(pic=>{
+            res.send(pic)
+        })
+        .catch(err=>{
+            res.send(req.params)
+        })
     },
 
+  
     upload:(req,res)=>{
         let newPicture = new Picture({
             user_id:req.body.userid,
             description:req.body.description,
             category:req.body.category,
+            likes :0,
             pic_url:req.file.cloudStoragePublicUrl
 
         })
@@ -56,6 +58,21 @@ module.exports={
                 res.json({message : 'picture deleted'})
             }
         })
+    },
+
+    addLikes:(req,res,next)=>{
+       Picture.findById(req.params.id,(err,result)=>{
+           if(err) res.status(500).json(err)
+           else{
+                let addLike = {
+                    likes : result.likes+1
+                }
+               Picture.findByIdAndUpdate(result.id, addLike,(err,result)=>{
+                    res.json(result)
+               })
+           }
+       })
+
     },
 
     editPic:(req,res,next)=>{

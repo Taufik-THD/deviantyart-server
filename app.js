@@ -10,7 +10,7 @@ var mongoose=require('mongoose')
 
 
 var indexRouter = require('./routes/index');
-// var picturesRouter = require('./routes/pictures');
+var picturesRouter = require('./routes/pictures');
 
 var app = express();
 
