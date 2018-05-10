@@ -53,7 +53,6 @@ module.exports = {
     
     User
       .findOne()
-      // .select('name')
       .where('email').equals(email.toLowerCase())
       .then(result => {
         if (!result) {
@@ -67,10 +66,14 @@ module.exports = {
             message: 'password do not match'
           })
         }
+
+        // Remove password key
+        delete result._doc.password;
+
         res.locals.user = result
         next()
       })
-    .catch(err => res.status(500).json({message: err.message}))
+    .catch(({message}) => res.status(500).json({ message }))
   },
 
   generateToken(req, res, next) {
@@ -80,7 +83,6 @@ module.exports = {
     } = req.body
 
     let user = res.locals.user
-    console.log(user)
     let token = jwt.sign({email, password}, jwtSecret)
     res.status(200).json({token, user})
   }
