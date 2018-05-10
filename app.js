@@ -10,7 +10,7 @@ var mongoose=require('mongoose')
 
 
 var indexRouter = require('./routes/index');
-var picturesRouter = require('./routes/pictures');
+// var picturesRouter = require('./routes/pictures');
 
 var app = express();
 
@@ -21,8 +21,6 @@ app.set('view engine', 'jade');
 
 
 app.use(cors())
-
-app.use(require('cors')())
 
 app.use(logger('dev'));
 app.use(express.json());
