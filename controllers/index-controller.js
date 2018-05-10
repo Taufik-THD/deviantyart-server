@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.js')
-require('dotenv').config()
+// require('dotenv').config()
 
 const jwtSecret = process.env.JWT_SECRET
 
@@ -83,7 +83,23 @@ module.exports = {
     } = req.body
     console.log(jwtSecret)
     let user = res.locals.user
-    let token = jwt.sign({email, password}, jwtSecret)
-    res.status(200).json({token, user})
+    let token = jwt.sign({user}, jwtSecret)
+    res.status(200).json({token, userId: user._id})
+  },
+
+  auth(req, res, next) {
+    let jwtSecret = process.env.JWT_SECRET
+    let token = req.body.token
+    jwt.verify(token, jwtSecret, decode)
+    function decode(err, result) {
+      if(err) {
+        console.log(err.message)
+        return res.status(401).json({
+          message: 'please login first'
+        })
+      }
+      console.log('------', result)
+    }
+    next()
   }
 }
