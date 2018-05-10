@@ -12,11 +12,18 @@ require('dotenv').config()
 
 
 var indexRouter = require('./routes/index');
+
 var picturesRouter = require('./routes/pictures');
 
 var app = express();
 
-mongoose.connect("mongodb://127.0.0.1:27017/deviantyart")
+mongoose.connect('mongodb://faldhifal:123456@ds119640.mlab.com:19640/grouppro2')
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('DATABASE BERHASIL KAMI HACK');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -32,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/pictures', picturesRouter);
+// app.use('/pictures', picturesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

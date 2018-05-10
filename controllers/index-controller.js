@@ -8,7 +8,7 @@ const jwtSecret = process.env.JWT_SECRET
 module.exports = {
   register(req, res, next) {
     const {
-      name,
+      nama,
       email,
       password
     } = req.body
@@ -25,7 +25,7 @@ module.exports = {
         }
         return User
           .create({
-            name,
+            nama,
             email,
             password
           })
@@ -77,6 +77,11 @@ module.exports = {
   },
 
   generateToken(req, res, next) {
+    const {
+      email,
+      password
+    } = req.body
+    console.log(jwtSecret)
     let user = res.locals.user
     let token = jwt.sign({user}, jwtSecret)
     res.status(200).json({token, userId: user._id})
