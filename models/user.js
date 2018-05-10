@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
 const Schema = mongoose.Schema
 
@@ -26,6 +27,12 @@ const userSchema = new Schema({
   images: [{
     type: Schema.Types.ObjectId, ref: 'picture'
   }]
+})
+
+// MIDDLEWARE
+userSchema.pre('save', function() {
+  let hash = bcrypt.hashSync(this.password)
+  this.password = hash
 })
 
 const User = mongoose.model('User', userSchema)
