@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  register
+  register,
+  login,
+  generateToken
 } = require('../controllers/index-controller')
 
 
@@ -15,5 +17,6 @@ router.get('/', function(req, res, next) {
 
 // POST
 router.post('/register', register)
+router.post('/login', login, generateToken)
 
 module.exports = router;
