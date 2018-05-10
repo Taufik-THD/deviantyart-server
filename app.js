@@ -6,7 +6,11 @@ var logger = require('morgan');
 var mongoose=require('mongoose')
 
 var indexRouter = require('./routes/index');
+<<<<<<< 710149c113d2df5d1f92ecd01a9479679de50d9f
 var picturesRouter = require('./routes/pictures');
+=======
+// var usersRouter = require('./routes/users');
+>>>>>>> register, please check
 
 var app = express();
 
@@ -24,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/pictures', picturesRouter);
+// app.use('/pictures', picturesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
