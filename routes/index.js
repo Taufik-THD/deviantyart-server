@@ -11,7 +11,9 @@ const upload = multer({
 })
 
 const {
-  register
+  register,
+  login,
+  generateToken
 } = require('../controllers/index-controller')
 
 /* GET home page. */
@@ -21,5 +23,6 @@ router.post('/image', upload.single('item'), sendUploadToGCS, addImage)
 
 // POST
 router.post('/register', register)
+router.post('/login', login, generateToken)
 
 module.exports = router;
