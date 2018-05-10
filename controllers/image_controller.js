@@ -3,14 +3,13 @@ const Image = require('../models/picture');
 module.exports = {
 
   addImage(req, res){
+
     const newImage = new Image({
       user_id: '4',
-      description: 'chaioa',
-      category : 'chaioa',
+      picture_name: req.body.picture_name,
+      description: req.body.description,
       pic_url: req.file.cloudStoragePublicUrl
     })
-
-    console.log(req.file);
 
     newImage.save()
 
