@@ -8,9 +8,11 @@ const cors = require('cors');
 
 var mongoose=require('mongoose')
 
+require('dotenv').config()
+
 
 var indexRouter = require('./routes/index');
-// var picturesRouter = require('./routes/pictures');
+var picturesRouter = require('./routes/pictures');
 
 var app = express();
 
