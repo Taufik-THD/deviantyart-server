@@ -1,12 +1,11 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const User = require('../models/user.js')
-// require('dotenv').config()
-
+const User = require('../models/user')
 const jwtSecret = process.env.JWT_SECRET
 
 module.exports = {
-  register(req, res, next) {
+  register(req, res) {
+
     const {
       nama,
       email,
@@ -46,60 +45,40 @@ module.exports = {
   },
 
   login(req, res, next) {
-    const {
-      email,
-      password
-    } = req.body
-    
-    User
-      .findOne()
-      .where('email').equals(email.toLowerCase())
-      .then(result => {
-        if (!result) {
-          return res.status(400).json({
-            message: 'please check your email'
-          })
-        }
-        let isMatch = bcrypt.compareSync(password, result.password)
-        if(!isMatch) {
-          return res.status(400).json({
-            message: 'password do not match'
-          })
-        }
 
-        // Remove password key
-        delete result._doc.password;
+    const { email, password } = req.body
 
-        res.locals.user = result
-        next()
-      })
-    .catch(({message}) => res.status(500).json({ message }))
-  },
+    User.findOne({$or: [
+      {email: req.body.email},
+      {username: req.body.username}
+    ]}, function (err, user) {
 
-  generateToken(req, res, next) {
-    const {
-      email,
-      password
-    } = req.body
-    console.log(jwtSecret)
-    let user = res.locals.user
-    let token = jwt.sign({user}, jwtSecret)
-    res.status(200).json({token, userId: user._id})
-  },
-
-  auth(req, res, next) {
-    let jwtSecret = process.env.JWT_SECRET
-    let token = req.body.token
-    jwt.verify(token, jwtSecret, decode)
-    function decode(err, result) {
-      if(err) {
-        console.log(err.message)
-        return res.status(401).json({
-          message: 'please login first'
-        })
+      if (err) {
+        throw err
       }
-      console.log('------', result)
-    }
-    next()
+
+      user.comparePassword(req.body.password, function (err, isMatch) {
+
+        if (err) {
+          throw err
+        }
+
+        if (isMatch) {
+
+          user.token = jwt.sign({id: user._id}, jwtSecret)
+          req.headers.token = user.token
+          res.status(200).json(user.token)
+
+        } else {
+
+          res.status(404).json("wrong password !")
+
+        }
+
+      })
+
+    })
+
   }
+
 }

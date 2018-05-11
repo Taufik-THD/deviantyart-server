@@ -8,7 +8,8 @@ module.exports = {
       user_id: '4',
       picture_name: req.body.picture_name,
       description: req.body.description,
-      pic_url: req.file.cloudStoragePublicUrl
+      pic_url: req.file.cloudStoragePublicUrl,
+      likes: 0
     })
 
     newImage.save()
