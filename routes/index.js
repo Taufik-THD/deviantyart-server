@@ -3,6 +3,7 @@ var router = express.Router();
 const multer = require('multer');
 const { addImage, getImage } = require('../controllers/image_controller');
 const { sendUploadToGCS } = require('../middlewares/uploadGcs');
+const { authentication } = require('../middlewares/authentication');
 const upload = multer({
  storage  : multer.memoryStorage(),
  limits   : {
@@ -10,20 +11,15 @@ const upload = multer({
    }
 })
 
-const {
-  register,
-  login,
-  generateToken,
-  auth
-} = require('../controllers/index-controller')
+const { register, login } = require('../controllers/index-controller')
 
 /* GET home page. */
 router.get('/', getImage);
 
-router.post('/image', auth, upload.single('item'), sendUploadToGCS, addImage)
+router.post('/image', upload.single('item'), sendUploadToGCS, addImage)
 
 // POST
 router.post('/register', register)
-router.post('/login', login, generateToken)
+router.post('/login', login)
 
 module.exports = router;
