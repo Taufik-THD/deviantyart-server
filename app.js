@@ -12,7 +12,8 @@ const mongoose=require('mongoose')
 mongoose.connect('mongodb://taufikGantenk:qwerpilkopi0@ds119820.mlab.com:19820/grouppro2')
 
 const indexRouter = require('./routes/index');
-const picturesRouter = require('./routes/pictures');
+// const picturesRouter = require('./routes/pictures');
+const userRouter = require('./routes/user')
 
 
 const db = mongoose.connection;
@@ -36,7 +37,7 @@ app.use(cors())
 
 
 app.use('/', indexRouter);
-app.use('')
+app.use('/user', userRouter)
 // app.use('/pictures', picturesRouter);
 
 // catch 404 and forward to error handler
