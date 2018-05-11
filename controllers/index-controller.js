@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
-const jwtSecret = process.env.JWT_SECRET
 
 module.exports = {
   register(req, res) {
@@ -65,7 +64,7 @@ module.exports = {
 
         if (isMatch) {
 
-          user.token = jwt.sign({id: user._id}, jwtSecret)
+          user.token = jwt.sign({email: req.body.email}, "secret")
           req.headers.token = user.token
           res.status(200).json(user.token)
 
