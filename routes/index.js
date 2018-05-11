@@ -16,9 +16,9 @@ const { register, login } = require('../controllers/index-controller')
 /* GET home page. */
 router.get('/', getImage);
 
-router.post('/image', upload.single('item'), sendUploadToGCS, addImage)
 
 // POST
+router.post('/image', upload.single('item'), sendUploadToGCS, addImage)
 router.post('/register', register)
 router.post('/login', login)
 
